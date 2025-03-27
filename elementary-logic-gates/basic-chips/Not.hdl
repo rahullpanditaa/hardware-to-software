@@ -1,0 +1,11 @@
+/**
+if in==1, out = 0, else out = 1.
+Given - a NAND gate
+*/
+CHIP Not {
+    IN in;
+    OUT out;
+
+    PARTS:
+    Nand(a= in, b= in, out= out);
+}
