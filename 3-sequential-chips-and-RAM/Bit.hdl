@@ -1,0 +1,14 @@
+/**
+ * 1-bit register:
+ * if (load(t) == 1) then out(t+1) = in(t), else out(t+1) = out(t)
+ * (no idea about b input of mux in 1st cycle; since load==1, out=in)
+ */
+CHIP Bit {
+    IN in, load;
+    OUT out;
+
+    PARTS:
+    // Mux outputs a when sel is 0
+    Mux(a= muxIn, b= in, sel= load, out= temp);
+    DFF(in= temp, out= muxIn, out= out);
+}
