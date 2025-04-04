@@ -5,8 +5,11 @@ public class Code {
     private final Map<String,String> c_instruction_comp;
     private final Map<String,String> c_instruction_dest;
     private final Map<String,String> c_instruction_jump;
+    private String currentInstruction;
 
-    public Code() {
+    public Code(String line) {
+        this.currentInstruction = line;
+
         this.c_instruction_comp = new HashMap<>();
         c_instruction_comp.put("0","0101010");
         c_instruction_comp.put("1","0111111");
@@ -58,4 +61,48 @@ public class Code {
         c_instruction_jump.put("JLE","110");
         c_instruction_jump.put("JMP","111");
     }
+
+    public String convertToBinary() {
+        if (currentInstruction.startsWith("@")) {
+            return AInstructionToBinary();
+        }
+        return CInstructionToBinary();
+    }
+
+    private String AInstructionToBinary() {
+        int value = Integer.valueOf(currentInstruction.substring(1));
+        String AInBinary = Integer.toBinaryString(value);
+        if (AInBinary.length() > 15) {
+            AInBinary = AInBinary.substring(AInBinary.length()-15);
+        }
+        return "";
+    }
+
+    private String CInstructionToBinary() {
+        // dest=comp;jump -> dest and jump are optional fields
+        if (currentInstruction.contains("=") && currentInstruction.contains(";")) {
+            // both dest and jump fields also present
+            String[] arr = currentInstruction.split("=");
+            String[] compAndJump = arr[1].split(";");
+            String destBits = c_instruction_dest.get(arr[0]);
+            String compBits = c_instruction_comp.get(compAndJump[0]);
+            String jumpBits = c_instruction_jump.get(compAndJump[1]);
+            return "111" + destBits + compBits + jumpBits;
+        }
+        // only dest and comp; jump is null
+        if (currentInstruction.contains("=")) {
+            String[] destAndComp = currentInstruction.split("=");
+            return "111" + c_instruction_dest.get(destAndComp[0]) + c_instruction_comp.get(destAndComp[1]) + c_instruction_jump.get("null");
+        }
+        // dest null; comp and jump
+        if (currentInstruction.contains(";")) {
+            String[] compAndJump = currentInstruction.split(";");
+            return "111" + c_instruction_dest.get("null") + c_instruction_comp.get(compAndJump[0]) + c_instruction_jump.get(compAndJump[1]);
+        }
+
+        // only comp field present; rest are null
+        return "111" + c_instruction_dest.get("null") + c_instruction_comp.get(currentInstruction) + c_instruction_jump.get("null");
+    }
+
+
 }
