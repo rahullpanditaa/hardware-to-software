@@ -1,3 +1,6 @@
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,19 @@ public class Parser {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
+    }
 
+    public void generateBinaryCode() {
+        String[] file = FILE_NAME.split(".");
+        String fileName = file[0];
+        try (Writer writer = new FileWriter(fileName + ".txt")) {
+            for (String s : binaryCode) {
+                writer.write(s);
+                writer.write("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private static void removeInlineComments(String line) {
