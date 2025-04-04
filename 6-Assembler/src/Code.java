@@ -70,12 +70,10 @@ public class Code {
     }
 
     private String AInstructionToBinary() {
-        int value = Integer.valueOf(currentInstruction.substring(1));
-        String AInBinary = Integer.toBinaryString(value);
-        if (AInBinary.length() > 15) {
-            AInBinary = AInBinary.substring(AInBinary.length()-15);
-        }
-        return "";
+        // @value
+        String AToBinary = Integer.toBinaryString(Integer.parseInt(currentInstruction.substring(1))); // 32 bits max
+        AToBinary = AToBinary.substring(AToBinary.length() - 1); // value in bits
+        return "0" + AToBinary;
     }
 
     private String CInstructionToBinary() {
