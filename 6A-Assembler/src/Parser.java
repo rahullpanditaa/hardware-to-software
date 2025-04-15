@@ -32,7 +32,7 @@ public class Parser {
     // are there any more lines in the input? - including comments, whitespace (?)
     public boolean hasMoreLines() {
         // each element in list corresponds to one line in the assembly code file
-        return assemblyCode.isEmpty();
+        return !assemblyCode.isEmpty();
     }
 
     // skips over whitespace and comments
@@ -40,58 +40,23 @@ public class Parser {
     // only called if hasMoreLines returns true
     // initially, no current instruction
     public void advance() {
-
-//        while (hasMoreLines()) {
-//            // if current instruction is not a comment or whitespace
-//            if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
-//                currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");  // remove inline comments
-//            }
-//        }
         if (hasMoreLines()) {
+            // if current line is a valid line of code i.e. not a comment or whitespace
             if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
                 currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");
                 lineNumber++;
                 assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
+                return;
             }
+            // if current line is not a valid line of code i.e. either comment or whitespace
+            lineNumber++;
+            assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
         }
 
     }
 
     public String instructionType() {
         if (currentInstruction.startsWith("@")) { return A_INSTRUCTION; }
-        return C_INSTRUCTION;
-    }
-
-    /*
-    public boolean hasMoreLines() {
-        // Dealing with an ArrayList now
-        // check whether file aka list was empty
-        if (this.assemblyCode.isEmpty()) {
-            return false;
-        }
-
-        // 1 or more lines in asm file --> 1 or more elements in list
-        for (int i = 0; i < assemblyCode.size(); i++) {
-            String currentLine = assemblyCode.get(i);
-            if (!(currentLine.startsWith("//") || currentLine.isBlank())) {  // not a comment or whitespace
-                advance(currentLine);
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // returns the current instruction to be converted to binary
-    private String advance(String instruction) {
-        this.currentInstruction = instruction.replaceAll("//.*", "");
-        ;
-        return currentInstruction;
-    }
-
-    public String instructionType() {
-        if (currentInstruction.startsWith("@")) {
-            return A_INSTRUCTION;
-        }
         return C_INSTRUCTION;
     }
 
@@ -121,5 +86,4 @@ public class Parser {
         // only comp
         return currentInstruction;
     }
-     */
 }
