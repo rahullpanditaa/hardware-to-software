@@ -45,7 +45,7 @@ public class Parser {
 
     // returns the current instruction to be converted to binary
     public String advance(String instruction) {
-        this.currentInstruction = instruction;
+        this.currentInstruction = instruction.replaceAll("//.*","");;
         return currentInstruction;
     }
 
