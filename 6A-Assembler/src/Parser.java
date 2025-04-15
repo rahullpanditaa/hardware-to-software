@@ -8,7 +8,7 @@ import java.util.List;
 public class Parser {
     private List<String> assemblyCode;
     private String currentInstruction;
-    private final int lineNumber = 0;
+    private int lineNumber = 0;
     private final String A_INSTRUCTION = "A_INSTRUCTION";
     private final String C_INSTRUCTION = "C_INSTRUCTION";
 
@@ -29,6 +29,40 @@ public class Parser {
          return this.currentInstruction;
     }
 
+    // are there any more lines in the input? - including comments, whitespace (?)
+    public boolean hasMoreLines() {
+        // each element in list corresponds to one line in the assembly code file
+        return assemblyCode.isEmpty();
+    }
+
+    // skips over whitespace and comments
+    // reads the next instruction, makes it the current instruction
+    // only called if hasMoreLines returns true
+    // initially, no current instruction
+    public void advance() {
+
+//        while (hasMoreLines()) {
+//            // if current instruction is not a comment or whitespace
+//            if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
+//                currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");  // remove inline comments
+//            }
+//        }
+        if (hasMoreLines()) {
+            if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
+                currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");
+                lineNumber++;
+                assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
+            }
+        }
+
+    }
+
+    public String instructionType() {
+        if (currentInstruction.startsWith("@")) { return A_INSTRUCTION; }
+        return C_INSTRUCTION;
+    }
+
+    /*
     public boolean hasMoreLines() {
         // Dealing with an ArrayList now
         // check whether file aka list was empty
@@ -87,4 +121,5 @@ public class Parser {
         // only comp
         return currentInstruction;
     }
+     */
 }
