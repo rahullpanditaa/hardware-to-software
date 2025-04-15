@@ -9,8 +9,8 @@ public class Parser {
     private List<String> assemblyCode;
     private String currentInstruction;
     private final int lineNumber = 0;
-    private final String A_INSTRUCTION = "A";
-    private final String C_INSTRUCTION = "C";
+    private final String A_INSTRUCTION = "A_INSTRUCTION";
+    private final String C_INSTRUCTION = "C_INSTRUCTION";
 
     public Parser(String asmFile) {
         // open input file, store contents in list to make it available for operations from other methods
@@ -44,10 +44,43 @@ public class Parser {
     }
 
     // returns the current instruction to be converted to binary
-    public String advance(String instruction) {
-        this.currentInstruction = instruction.replaceAll("//.*","");;
+    private String advance(String instruction) {
+        this.currentInstruction = instruction.replaceAll("//.*", "");
+        ;
         return currentInstruction;
     }
 
+    public String instructionType() {
+        if (currentInstruction.startsWith("@")) {
+            return A_INSTRUCTION;
+        }
+        return C_INSTRUCTION;
+    }
 
+    public String dest() {
+        if (currentInstruction.contains("=")) {
+            return currentInstruction.split("=")[0];
+        }
+        return "null";
+    }
+
+    public String jump() {
+        if (currentInstruction.contains(";")) {
+            return currentInstruction.split(";")[1];
+        }
+        return "null";
+    }
+
+    public String comp() {
+        if (currentInstruction.contains("=") && currentInstruction.contains(";")) {
+            // dest=comp;jump
+            return currentInstruction.split("=")[1].split(";")[0];
+        } else if (currentInstruction.contains("=")) { // dest=comp
+            return currentInstruction.split("=")[1];
+        } else if (currentInstruction.contains(";")) {
+            return currentInstruction.split(";")[0];
+        }
+        // only comp
+        return currentInstruction;
+    }
 }
