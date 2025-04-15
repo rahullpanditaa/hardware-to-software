@@ -58,4 +58,15 @@ public class Code {
         jumpBinary.put("JLE","110");
         jumpBinary.put("JMP","111");
     }
+
+    public String dest(String destInAssembly) {
+        return destBinary.get(destInAssembly);
+    }
+    public String comp(String compInAssembly) {
+        return compBinary.get(compInAssembly);
+    }
+
+    public String jump(String jumpInAssembly) {
+        return jumpBinary.get(jumpInAssembly);
+    }
 }
