@@ -25,6 +25,10 @@ public class Parser {
         }
     }
 
+    public String getCurrentInstruction() {
+         return this.currentInstruction;
+    }
+
     public boolean hasMoreLines() {
         // Dealing with an ArrayList now
         // check whether file aka list was empty
