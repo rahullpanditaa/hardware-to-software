@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Parser {
@@ -40,19 +41,40 @@ public class Parser {
     // only called if hasMoreLines returns true
     // initially, no current instruction
     public void advance() {
-        if (hasMoreLines()) {
-            // if current line is a valid line of code i.e. not a comment or whitespace
-            if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
-                currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");
-                lineNumber++;
-                assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
-                return;
-            }
-            // if current line is not a valid line of code i.e. either comment or whitespace
-            lineNumber++;
-            assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
+        removeCommentsAndWhiteSpace();
+        // removed all comments and whitespace
+        // only have to deal with inline comments
+        for (String line : assemblyCode) {
+            line = line.replaceAll("//.*", "").trim();
         }
 
+        // only have valid lines of assembly code now
+        currentInstruction = assemblyCode.get(lineNumber);
+        lineNumber++;
+        assemblyCode = assemblyCode.subList(lineNumber, assemblyCode.size());
+    }
+
+//        if (hasMoreLines()) {
+            // if current line is a valid line of code i.e. not a comment or whitespace
+//            if (!(assemblyCode.get(lineNumber).startsWith("//") || assemblyCode.get(lineNumber).isBlank())) {
+//                currentInstruction = assemblyCode.get(lineNumber).replaceAll("//.*","");
+//                lineNumber++;
+//                assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
+//                return;
+//            }
+            // if current line is not a valid line of code i.e. either comment or whitespace
+//            lineNumber++;
+//            assemblyCode = assemblyCode.subList(lineNumber,assemblyCode.size());
+
+
+    private void removeCommentsAndWhiteSpace() {
+        Iterator<String> iter = assemblyCode.iterator();
+        while(iter.hasNext()) {
+            String line = iter.next();
+            if (line.startsWith("//") || line.isBlank()) {
+                iter.remove();
+            }
+        }
     }
 
     public String instructionType() {
