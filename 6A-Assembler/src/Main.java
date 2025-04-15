@@ -4,14 +4,10 @@ public class Main {
         Parser p = new Parser("MaxL.asm");
 //        System.out.println(p.hasMoreLines());
 //        System.out.println(p.getCurrentInstruction());
-        while (p.getCurrentInstruction() == null) {
-            p.advance();
+        p.advance();
+        for (String line : p.getAssemblyCode()) {
+            System.out.println(line);
         }
-        System.out.println(p.getCurrentInstruction());
-        p.advance();
-        System.out.println(p.getCurrentInstruction());
-        p.advance();
-        System.out.println(p.getCurrentInstruction());
 
 
     }

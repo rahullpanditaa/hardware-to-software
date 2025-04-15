@@ -26,6 +26,10 @@ public class Parser {
         }
     }
 
+    public List<String> getAssemblyCode() {
+        return assemblyCode;
+    }
+
     public String getCurrentInstruction() {
          return this.currentInstruction;
     }
@@ -49,9 +53,9 @@ public class Parser {
         }
 
         // only have valid lines of assembly code now
-        currentInstruction = assemblyCode.get(lineNumber);
-        lineNumber++;
-        assemblyCode = assemblyCode.subList(lineNumber, assemblyCode.size());
+//        currentInstruction = assemblyCode.get(lineNumber);
+//        lineNumber++;
+//        assemblyCode = assemblyCode.subList(lineNumber, assemblyCode.size());
     }
 
 //        if (hasMoreLines()) {
