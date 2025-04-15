@@ -4,8 +4,8 @@ import java.util.Map;
 // dest=comp;jump
 public class Code {
     private final Map<String,String> compBinary;
-//    private final Map<String,String> destBinary;
-//    private final Map<String,String> jumpBinary;
+    private final Map<String,String> destBinary;
+    private final Map<String,String> jumpBinary;
 
     public Code() {
         this.compBinary = new HashMap<>();
@@ -38,5 +38,24 @@ public class Code {
         compBinary.put("D&M","1000000");
         compBinary.put("D|M","1010101");
 
+        this.destBinary = new HashMap<>();
+        destBinary.put("null","000");
+        destBinary.put("M","001");
+        destBinary.put("D","010");
+        destBinary.put("DM","011");
+        destBinary.put("A","100");
+        destBinary.put("AM","101");
+        destBinary.put("AD","110");
+        destBinary.put("ADM","111");
+
+        this.jumpBinary = new HashMap<>();
+        jumpBinary.put("null","000");
+        jumpBinary.put("JGT","001");
+        jumpBinary.put("JEQ","010");
+        jumpBinary.put("JGE","011");
+        jumpBinary.put("JLT","100");
+        jumpBinary.put("JNE","101");
+        jumpBinary.put("JLE","110");
+        jumpBinary.put("JMP","111");
     }
 }
