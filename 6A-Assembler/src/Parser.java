@@ -10,6 +10,7 @@ public class Parser {
     private String currentInstruction;
     private final String A_INSTRUCTION = "A_INSTRUCTION";
     private final String C_INSTRUCTION = "C_INSTRUCTION";
+    private final String L_INSTRUCTION = "L_INSTRUCTION";
 
     public Parser(String asmFile) {
         // open input file, store contents in list to make it available for operations from other methods
@@ -62,7 +63,16 @@ public class Parser {
 
     public String instructionType() {
         if (currentInstruction.startsWith("@")) { return A_INSTRUCTION; }
+        if (currentInstruction.startsWith("(")) { return L_INSTRUCTION; }
         return C_INSTRUCTION;
+    }
+
+    public String symbol() {
+        if (instructionType().equals(A_INSTRUCTION)) {      // @xxx, xxx is either a decimal or symbol
+            return currentInstruction.substring(1);
+        }
+        // (xxx),  a label declaration
+        return currentInstruction.substring(1,currentInstruction.length()-1);
     }
 
     public String dest() {
