@@ -42,7 +42,7 @@ public class Main {
         while (parser.hasMoreLines()) {
             parser.advance();   // get the current instruction
             // check if current instruction is @decimal, if yes then skip
-            if (parser.getCurrentInstruction().substring(1).matches("\\d+")) {
+            if (parser.symbol().matches("\\d+")) {
                 lineNumber++;
             }
             // current instruction is (label)
@@ -53,9 +53,49 @@ public class Main {
         }
     }
 
-    private static void secondPass(SymbolTable table, Parser parser, Code codeWriter) {
+    private static void secondPass(String binaryOutput, SymbolTable table, Parser parser, Code codeWriter) {
         // after first pass, have all pre-defined symbols and labels in the tabel
         // ready to parse through and generate output file
-        int n = 16;     
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(binaryOutput))) {
+            int n = 16;   // variable assignment starts from RAM location 16
+            while (parser.hasMoreLines()) {
+                parser.advance();
+                // only have to deal with @symbol and @decimal
+                if (parser.instructionType().equals("A_INSTRUCTION")) {
+                    // @symbol or @decimal
+                    if (parser.symbol().matches("\\d+")) {
+                        // @decimal
+                        int decimal = Integer.valueOf(parser.symbol());
+                        String bin = Integer.toBinaryString(decimal);
+                        writer.write("0" + String.format("%15s",bin).replace(' ','0'));
+                        writer.write("\n");
+                    }
+                    // @symbol
+                    if (table.contains(parser.symbol())) {
+                        // if symbol is a predefined symbol or a label declaration (at beginning)
+                        //@SCREEN, @R5
+                        // @16384, @5
+                        int decimal = table.getAddress(parser.symbol());
+                        // have value in decimal eg 16384
+                        String bin = Integer.toBinaryString(decimal);
+                        writer.write("0" + String.format("%15s",bin).replace(' ','0'));
+                        writer.write("\n");
+                    }
+                    // @variable - will not be in symbol table
+                    if (!(table.contains(parser.symbol()))) {
+                        table.addEntry(parser.symbol(), "" + n);
+                        n++;
+                        // eg - @temp now in table -> temp - 16 --> @16
+                        int decimal = table.getAddress(parser.symbol());
+                        String bin = Integer.toBinaryString(decimal);
+                        writer.write("0" + String.format("%15s",bin).replace(' ','0'));
+                        writer.write("\n");
+                    }
+                }
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
