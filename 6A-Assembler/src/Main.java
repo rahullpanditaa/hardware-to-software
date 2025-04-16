@@ -22,7 +22,7 @@ public class Main {
                     writer.write("\n");
                 }
                 if (parser.instructionType().equals("C_INSTRUCTION")) {
-                    String cToBinary = "111" + codeWriter.dest(parser.dest()) + codeWriter.comp(parser.comp()) + codeWriter.jump(parser.jump());
+                    String cToBinary = "111" + codeWriter.comp(parser.comp()) +codeWriter.dest(parser.dest()) + codeWriter.jump(parser.jump());
                     writer.write(cToBinary);
                     writer.write("\n");
                 }
