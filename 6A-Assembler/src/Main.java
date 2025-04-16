@@ -9,28 +9,14 @@ public class Main {
         Code c = new Code();
         String hackFileName = args[0].replace(".asm",".hack");
         SymbolTable table = new SymbolTable();
-        start(hackFileName,p,c);
+//        start(hackFileName,p,c, table);
+        firstPass(table, p);
+        secondPass(hackFileName, table, p, c);
     }
 
-    private static void start(String hackFile,Parser parser, Code codeWriter) {
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(hackFile))) {
-            while (parser.hasMoreLines()) {
-                parser.advance(); // get the current instruction
-                if (parser.instructionType().equals("A_INSTRUCTION")) {
-                    int decimal = Integer.valueOf(parser.getCurrentInstruction().substring(1));
-                    String bin = Integer.toBinaryString(decimal);
-                    writer.write("0" + String.format("%15s",bin).replace(' ','0'));
-                    writer.write("\n");
-                }
-                if (parser.instructionType().equals("C_INSTRUCTION")) {
-                    String cToBinary = "111" + codeWriter.comp(parser.comp()) +codeWriter.dest(parser.dest()) + codeWriter.jump(parser.jump());
-                    writer.write(cToBinary);
-                    writer.write("\n");
-                }
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private static void start(String hackFile,Parser parser, Code codeWriter, SymbolTable table) {
+        firstPass(table, parser); // adds label declarations to symbol table
+        secondPass(hackFile, table, parser, codeWriter);
     }
 
     // not writing anything to output yet
@@ -91,6 +77,12 @@ public class Main {
                         writer.write("0" + String.format("%15s",bin).replace(' ','0'));
                         writer.write("\n");
                     }
+                }
+
+                if (parser.instructionType().equals("C_INSTRUCTION")) {
+                    String cToBinary = "111" + codeWriter.comp(parser.comp()) +codeWriter.dest(parser.dest()) + codeWriter.jump(parser.jump());
+                    writer.write(cToBinary);
+                    writer.write("\n");
                 }
             }
         } catch (IOException e) {
