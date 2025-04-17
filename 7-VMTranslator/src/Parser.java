@@ -81,6 +81,25 @@ public class Parser {
         return C_POP;
     }
 
+    public String arg1() {
+        // only 2 valid commands; push constant i and 9 arithmetic commands
+        if (commandType().equals(C_ARITHMETIC)) {
+            return currentCommand;
+        }
+        // push/pop segment i
+        return currentCommand.split(" ")[1];
+    }
+
+    public int arg2() {
+        // called only if current command is push/pop segment i
+        // return i
+        if (commandType().equals(C_PUSH) || commandType().equals(C_POP)) {
+            return Integer.parseInt(currentCommand.split(" ")[2]);
+        } else {
+            throw new IllegalStateException("current command does not have a second argument");
+        }
+    }
+
 
 
 }
