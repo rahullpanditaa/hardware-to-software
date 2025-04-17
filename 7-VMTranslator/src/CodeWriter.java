@@ -159,6 +159,7 @@ public class CodeWriter {
                 writer.write("A=A-1");
                 writer.write("\n");
                 writer.write("M=D&M");
+                writer.write("\n");
                 SP--;
             }
             // REFACTOR AND,OR ASSEMBLY CODE GENERATION LATER, BOTH ARE NEARLY IDENTICAL
@@ -174,6 +175,7 @@ public class CodeWriter {
                 writer.write("A=A-1");
                 writer.write("\n");
                 writer.write("M=D|M");
+                writer.write("\n");
                 SP--;
             }
             if (command.equals("not")) {
@@ -221,6 +223,11 @@ public class CodeWriter {
     public void close() {
         try {
             if (writer != null) {
+                writer.write("(END)");
+                writer.write("\n");
+                writer.write("@END");
+                writer.write("\n");
+                writer.write("0;JMP");
                 writer.close();
             }
         } catch (IOException e) {
