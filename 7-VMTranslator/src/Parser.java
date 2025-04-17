@@ -40,6 +40,10 @@ public class Parser {
         return currentCommand;
     }
 
+    public List<String> getVmCode() {
+        return vmCode;
+    }
+
     public boolean hasMoreLines() {
         return !vmCode.isEmpty();
     }
