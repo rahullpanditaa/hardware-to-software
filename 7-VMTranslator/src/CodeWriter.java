@@ -15,6 +15,35 @@ public class CodeWriter {
         }
     }
 
+    // command received from arg1()
+    public void writeArithmetic(String command) {
+        try {
+            if (command.equals("add")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=D+M");
+                writer.write("\n");
+                writer.write("D=A+1");
+                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=D");
+                writer.write("\n");
+                SP--;
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     // only receives ONE COMMAND; responsible for generating assembly for one vm command
     // commandType will come from Parser commandType()
     // segment -> arg1()
