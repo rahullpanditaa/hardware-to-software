@@ -29,16 +29,47 @@ public class CodeWriter {
                 writer.write("\n");
                 writer.write("A=A-1");
                 writer.write("\n");
-                writer.write("M=D+M");
+                writer.write("M=D+M"); //for sub, this will change to M=M-D
                 writer.write("\n");
-                writer.write("D=A+1");
-                writer.write("\n");
+//                writer.write("D=A+1");
+//                writer.write("\n");
                 writer.write("@SP");
                 writer.write("\n");
-                writer.write("M=D");
+                writer.write("M=M-1");
                 writer.write("\n");
                 SP--;
             }
+            if (command.equals("sub")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=M-D"); //for sub, this will change to M=M-D
+                writer.write("\n");
+//                writer.write("D=A+1");
+//                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");
+                writer.write("\n");
+                SP--;
+            }
+            if (command.equals("neg")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M-1");
+                writer.write("\n");
+                writer.write("M=-M");
+                writer.write("\n");
+                // SP does not change
+            }
+            
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
