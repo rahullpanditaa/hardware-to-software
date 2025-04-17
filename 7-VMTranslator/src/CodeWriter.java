@@ -69,7 +69,33 @@ public class CodeWriter {
                 writer.write("\n");
                 // SP does not change
             }
-            
+            if (command.equals("eq")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M-1");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=M-D");
+                writer.write("\n");
+                writer.write("@FALSE");
+                writer.write("\n");
+                writer.write("M;JNE");
+                writer.write("\n");
+                writer.write("M=-1");
+                writer.write("\n");
+                writer.write("(FALSE)");
+                writer.write("\n");
+                writer.write("M=0");
+                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");
+                writer.write("\n");
+                SP--;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
