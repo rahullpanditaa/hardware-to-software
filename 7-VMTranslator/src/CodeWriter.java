@@ -96,6 +96,30 @@ public class CodeWriter {
                 writer.write("\n");
                 SP--;
             }
+            if (command.equals("gt")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");   // implementing SP-- earlier in assembly code; seems like it will work
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=M-D");
+                writer.write("\n");
+                writer.write("@TRUE");
+                writer.write("\n");
+                writer.write("M;JGT");
+                writer.write("\n");
+                writer.write("M=0");
+                writer.write("\n");
+                writer.write("(TRUE)");
+                writer.write("\n");
+                writer.write("M=-1");
+                writer.write("\n");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
