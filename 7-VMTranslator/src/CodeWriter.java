@@ -146,6 +146,35 @@ public class CodeWriter {
                 writer.write("\n");
                 SP--;
             }
+            if (command.equals("and")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");  // *SP--
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=D&M");
+                SP--;
+            }
+            // REFACTOR AND,OR ASSEMBLY CODE GENERATION LATER, BOTH ARE NEARLY IDENTICAL
+            if (command.equals("or")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");  // *SP--
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("A=A-1");
+                writer.write("\n");
+                writer.write("M=D|M");
+                SP--;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
