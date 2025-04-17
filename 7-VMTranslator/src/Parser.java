@@ -12,7 +12,7 @@ public class Parser {
     private final List<String> arithmeticCommands;
     private static final String C_ARITHMETIC = "C_ARITHMETIC";
     private static final String C_PUSH = "C_PUSH";
-    private static final String C_POP = "C_Pop";
+    private static final String C_POP = "C_POP";
 
     public Parser(String vmFile) {
         this.vmCode = new ArrayList<>();  // stores the vm code, one list element for a single line of code
@@ -72,7 +72,14 @@ public class Parser {
         }
     }
 
-    
+    public String commandType() {
+        // Version 1 only has push constant i and arithmetic and logical commands
+        if (arithmeticCommands.contains(currentCommand)) {
+            return C_ARITHMETIC;
+        }
+        if (currentCommand.startsWith("push")) { return C_PUSH; }
+        return C_POP;
+    }
 
 
 
