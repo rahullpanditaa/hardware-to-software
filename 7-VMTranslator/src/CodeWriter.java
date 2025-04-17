@@ -66,10 +66,20 @@ public class CodeWriter {
             writer.write("@SP");
             writer.write("\n");
             writer.write("M=M+1");
+            writer.write("\n");
             SP++;
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
 
+    public void close() {
+        try {
+            if (writer != null) {
+                writer.close();
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
