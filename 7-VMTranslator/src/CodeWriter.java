@@ -16,6 +16,7 @@ public class CodeWriter {
     }
 
     // command received from arg1()
+    // ALL ASSEMBLY CODE CAN BE REFACTORED AND MADE SHORTER; LATER; SLEEPY
     public void writeArithmetic(String command) {
         try {
             if (command.equals("add")) {
@@ -174,6 +175,14 @@ public class CodeWriter {
                 writer.write("\n");
                 writer.write("M=D|M");
                 SP--;
+            }
+            if (command.equals("not")) {
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M-1");
+                writer.write("\n");
+                writer.write("M=!M");
+                writer.write("\n");
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
