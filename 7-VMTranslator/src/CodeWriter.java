@@ -197,6 +197,8 @@ public class CodeWriter {
     // either C_PUSH or C_POP
     // segment -> arg1()
     // index -> arg2()
+    // THE VIRTUAL MEMORY SEGMENTS LOCAL/ARGUMENT/THIS/THAT ARE IMPLEMENTED IN THE EXACT SAME WAY
+    // ONLY THE SEGMENT POINTER VARIABLE CHANGES
     public void writePushPop(String commandType, String segment, int index) {
         // push constant i done
         // pop local i
