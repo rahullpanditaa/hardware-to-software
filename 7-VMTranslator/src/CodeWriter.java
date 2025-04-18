@@ -5,6 +5,7 @@ import java.io.IOException;
 public class CodeWriter {
     private BufferedWriter writer;
     private static int SP = 256;
+    private static int LCL = 1015;
 
     public CodeWriter(String asmFile) {
         try {
@@ -193,12 +194,45 @@ public class CodeWriter {
 
     // only receives ONE COMMAND; responsible for generating assembly for one vm command
     // commandType will come from Parser commandType()
+    // either C_PUSH or C_POP
     // segment -> arg1()
     // index -> arg2()
     public void writePushPop(String commandType, String segment, int index) {
-        // only push constant i to implement for now
-        // arguments -> C_PUSH, constant, i
-        // write to file assembly for push constant i
+        // push constant i done
+        // pop local i
+        try {
+            if (commandType.equals("C_POP") && segment.equals("local")) {
+                writer.write("@" + index);
+                writer.write("\n");
+                writer.write("D=A");
+                writer.write("\n");
+                writer.write("@LCL");
+                writer.write("\n");
+                writer.write("D=D+M");
+                writer.write("\n");
+                writer.write("@addr");
+                writer.write("\n");
+                writer.write("M=D");
+                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M-1");
+                SP--;
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("@addr");
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("M=D");
+                writer.write("\n");
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         try {
             writer.write("@" + index);
             writer.write("\n");
