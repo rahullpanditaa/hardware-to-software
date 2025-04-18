@@ -230,6 +230,36 @@ public class CodeWriter {
                 writer.write("M=D");
                 writer.write("\n");
             }
+            if (commandType.equals("C_PUSH") || segment.equals("local")) {
+                // push local i
+                writer.write("@" + index);
+                writer.write("\n");
+                writer.write("D=A");
+                writer.write("\n");
+                writer.write("@LCL");
+                writer.write("\n");
+                writer.write("D=D+M");
+                writer.write("\n");
+                writer.write("@addr");
+                writer.write("\n");
+                writer.write("M=D");
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("D=M");
+                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("A=M");
+                writer.write("\n");
+                writer.write("M=D");
+                writer.write("\n");
+                writer.write("@SP");
+                writer.write("\n");
+                writer.write("M=M+1");
+                writer.write("\n");
+                SP++;
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
