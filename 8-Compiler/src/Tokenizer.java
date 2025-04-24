@@ -44,6 +44,7 @@ public class Tokenizer {
         for (String line : lines) {
             line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
         }
+        // only inline comments and whitespace lines and lines starting with a comment left
         List<String> linesToArrayList = new ArrayList<>(Arrays.asList(lines));
         Iterator<String> iterator = linesToArrayList.iterator();
         while (iterator.hasNext()) {
@@ -52,7 +53,10 @@ public class Tokenizer {
                 iterator.remove();
             }
         }
+        // only inline comments left
+//        for (String line : linesToArrayList) {
+//            line = line.replaceAll("//.*","");
+//        }
         sourceCode = String.join("\n",linesToArrayList);
-
     }
 }
