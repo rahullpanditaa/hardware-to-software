@@ -51,6 +51,7 @@ public class Tokenizer {
                 iterator.remove();
             }
         }
+        sourceCode = String.join("\n",lines);
 
     }
 }
