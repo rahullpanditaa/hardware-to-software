@@ -34,9 +34,6 @@ public class Tokenizer {
     // initially, there is no current token
     public void advance() {
         removeCommentsAndWhitespace();
-
-
-
     }
 
     private void removeCommentsAndWhitespace() {
@@ -48,13 +45,13 @@ public class Tokenizer {
             line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
         }
         // the lines array now contains only valid lines of code and whitespace lines (along with indentation)
-        Iterator<String> iterator = Arrays.stream(lines).iterator();
-        while (iterator.hasNext()) {
-            String lineOfCode = iterator.next();
-            if (lineOfCode.isBlank()) {
-                iterator.remove();
-            }
-        }
+//        Iterator<String> iterator = Arrays.stream(lines).iterator();
+//        while (iterator.hasNext()) {
+//            String lineOfCode = iterator.next();
+//            if (lineOfCode.isBlank()) {
+//                iterator.remove();
+//            }
+//        }
         sourceCode = String.join("\n",lines);
 
     }
