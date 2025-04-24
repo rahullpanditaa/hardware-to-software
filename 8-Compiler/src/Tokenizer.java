@@ -23,6 +23,10 @@ public class Tokenizer {
         }
     }
 
+    public String getSourceCode() {
+        return sourceCode;
+    }
+
     public boolean hasMoreTokens() {
         return !sourceCode.isEmpty();
     }
