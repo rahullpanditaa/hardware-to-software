@@ -9,6 +9,7 @@ public class Tokenizer {
     private List<String> sourceCode;
     String currentToken;
     private static List<String> keywords;
+    private static List<String> symbols;
 
     public Tokenizer(String jackFile) {
         this.sourceCode = new ArrayList<>();
@@ -42,6 +43,27 @@ public class Tokenizer {
         keywords.add("else");
         keywords.add("while");
         keywords.add("return");
+
+        symbols = new ArrayList<>();
+        symbols.add("{");
+        symbols.add("}");
+        symbols.add("(");
+        symbols.add(")");
+        symbols.add("[");
+        symbols.add("]");
+        symbols.add(".");
+        symbols.add(",");
+        symbols.add(";");
+        symbols.add("+");
+        symbols.add("-");
+        symbols.add("*");
+        symbols.add("/");
+        symbols.add("&");
+        symbols.add("|");
+        symbols.add("<");
+        symbols.add(">");
+        symbols.add("=");
+        symbols.add("~");
     }
 
     public boolean hasMoreToken() {
