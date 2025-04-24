@@ -44,15 +44,15 @@ public class Tokenizer {
         for (String line : lines) {
             line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
         }
-        // the lines array now contains only valid lines of code and whitespace lines (along with indentation)
-//        Iterator<String> iterator = Arrays.stream(lines).iterator();
-//        while (iterator.hasNext()) {
-//            String lineOfCode = iterator.next();
-//            if (lineOfCode.isBlank()) {
-//                iterator.remove();
-//            }
-//        }
-        sourceCode = String.join("\n",lines);
+        List<String> linesToArrayList = new ArrayList<>(Arrays.asList(lines));
+        Iterator<String> iterator = linesToArrayList.iterator();
+        while (iterator.hasNext()) {
+            String lineOfCode = iterator.next();
+            if (lineOfCode.startsWith("//") || lineOfCode.isBlank()) {
+                iterator.remove();
+            }
+        }
+        sourceCode = String.join("\n",linesToArrayList);
 
     }
 }
