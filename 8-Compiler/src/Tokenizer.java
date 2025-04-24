@@ -8,6 +8,7 @@ import java.util.List;
 public class Tokenizer {
     private List<String> sourceCode;
     String currentToken;
+    private static List<String> keywords;
 
     public Tokenizer(String jackFile) {
         this.sourceCode = new ArrayList<>();
@@ -19,6 +20,28 @@ public class Tokenizer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        keywords = new ArrayList<>();
+        keywords.add("class");
+        keywords.add("constructor");
+        keywords.add("function");
+        keywords.add("method");
+        keywords.add("field");
+        keywords.add("static");
+        keywords.add("var");
+        keywords.add("int");
+        keywords.add("char");
+        keywords.add("boolean");
+        keywords.add("void");
+        keywords.add("true");
+        keywords.add("false");
+        keywords.add("null");
+        keywords.add("this");
+        keywords.add("let");
+        keywords.add("do");
+        keywords.add("if");
+        keywords.add("else");
+        keywords.add("while");
+        keywords.add("return");
     }
 
     public boolean hasMoreToken() {
@@ -39,6 +62,7 @@ public class Tokenizer {
                 iterator.remove();
             }
         }
+        // api block comments and multi line comments left
 
 
     }
