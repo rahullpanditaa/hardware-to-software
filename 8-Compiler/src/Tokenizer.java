@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
@@ -22,18 +23,34 @@ public class Tokenizer {
         }
     }
 
-    public boolean hasMoreToken() {
-        return true;
+    public boolean hasMoreTokens() {
+        return !sourceCode.isEmpty();
     }
 
     // initially, there is no current token
     public void advance() {
+        removeCommentsAndWhitespace();
+
+
 
     }
 
     private void removeCommentsAndWhitespace() {
         // remove all api block comments and multi-line comments
         sourceCode = sourceCode.replaceAll("/\\*\\*?\\s\\w+\\s+\\*?.+\\s+\\*?.+\\s+\\*?/","");
+        // ->// comments
+        String[] lines = sourceCode.split("\n");
+        for (String line : lines) {
+            line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
+        }
+        // the lines array now contains only valid lines of code and whitespace lines (along with indentation)
+        Iterator<String> iterator = Arrays.stream(lines).iterator();
+        while (iterator.hasNext()) {
+            String lineOfCode = iterator.next();
+            if (lineOfCode.isBlank()) {
+                iterator.remove();
+            }
+        }
 
     }
 }
