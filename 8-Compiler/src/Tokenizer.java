@@ -13,6 +13,11 @@ public class Tokenizer {
     String currentToken;
     private static List<String> keywords;
     private static List<String> symbols;
+    private static String KEYWORD = "KEYWORD";
+    private static String IDENTIFIER = "IDENTIFIER";
+    private static String SYMBOL = "SYMBOL";
+    private static String INT_CONST = "INT_CONST";
+    private static String STRING_CONST = "STRING_CONST";
 
     public Tokenizer(String jackFile) {
         try {
@@ -82,6 +87,32 @@ public class Tokenizer {
     public void advance() {
         removeCommentsAndWhitespace(); // will remove all comments
         // Now, only valid tokens and whitespace left
+         String token = "";
+        for (int i = 0; i < sourceCode.length(); i++) {
+            if (sourceCode.substring(i, i+1).matches("/\s")) {
+                currentToken = token;
+                continue;
+            }
+            token = token.concat(sourceCode.substring(i, i+1));
+            sourceCode = sourceCode.substring(i+1);
+        }
+    }
+
+    private String tokenType() {
+        if (keywords.contains(currentToken)) {
+            return KEYWORD;
+        }
+        if (symbols.contains(currentToken)) {
+            return SYMBOL;
+        }
+        if (currentToken.matches("\"[^\"\\n]*\"")) {
+            return STRING_CONST;
+        }
+        if (Integer.parseInt(currentToken) >= 0 && Integer.parseInt(currentToken) <= 32767) {
+            return INT_CONST;
+        }
+        return IDENTIFIER;
+
     }
 
     private void removeCommentsAndWhitespace() {
@@ -90,6 +121,9 @@ public class Tokenizer {
 
         // remove all single line and inline comments
         sourceCode = sourceCode.replaceAll("//.*","");
+
+        // remove whitespace/blank lines
+        sourceCode = sourceCode.replaceAll("(?m)^\\s*$\\n?","").strip();
     }
 
 
