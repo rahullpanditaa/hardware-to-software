@@ -88,8 +88,9 @@ public class Tokenizer {
         removeCommentsAndWhitespace(); // will remove all comments
         // Now, only valid tokens and whitespace left
          String token = "";
+
         for (int i = 0; i < sourceCode.length(); i++) {
-            if (sourceCode.substring(i, i+1).matches("/\s")) {
+            if (sourceCode.substring(i, i+1).matches("\s")) {
                 currentToken = token;
                 continue;
             }
@@ -108,7 +109,7 @@ public class Tokenizer {
         if (currentToken.matches("\"[^\"\\n]*\"")) {
             return STRING_CONST;
         }
-        if (Integer.parseInt(currentToken) >= 0 && Integer.parseInt(currentToken) <= 32767) {
+        if (currentToken.matches("[0-9]+") && Integer.parseInt(currentToken) >= 0 && Integer.parseInt(currentToken) <= 32767) {
             return INT_CONST;
         }
         return IDENTIFIER;
