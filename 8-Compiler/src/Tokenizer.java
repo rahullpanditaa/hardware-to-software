@@ -37,8 +37,32 @@ public class Tokenizer {
 
     // initially, there is no current token
     public void advance() {
-//        removeCommentsAndWhitespace();
+        removeCommentsAndWhitespace();
     }
+
+    private void removeCommentsAndWhitespace() {
+        // remove api block comments and multiline comments
+        sourceCode = sourceCode.replaceAll("\\/\\*[\\s\\S]*?\\*\\/","");
+
+        // remove all single line and inline comments
+        sourceCode = sourceCode.replaceAll("//.*","");
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //    private void removeCommentsAndWhitespace() {
 //        // remove all api block comments and multi-line comments
