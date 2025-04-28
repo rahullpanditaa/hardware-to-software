@@ -33,30 +33,30 @@ public class Tokenizer {
 
     // initially, there is no current token
     public void advance() {
-        removeCommentsAndWhitespace();
+//        removeCommentsAndWhitespace();
     }
 
-    private void removeCommentsAndWhitespace() {
-        // remove all api block comments and multi-line comments
-        sourceCode = sourceCode.replaceAll("/\\*\\*?\\s\\w+\\s+\\*?.+\\s+\\*?.+\\s+\\*?/","");
-        // ->// comments
-        String[] lines = sourceCode.split("\n");
-        for (String line : lines) {
-            line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
-        }
-        // only inline comments and whitespace lines and lines starting with a comment left
-        List<String> linesToArrayList = new ArrayList<>(Arrays.asList(lines));
-        Iterator<String> iterator = linesToArrayList.iterator();
-        while (iterator.hasNext()) {
-            String lineOfCode = iterator.next();
-            if (lineOfCode.startsWith("//") || lineOfCode.isBlank()) {
-                iterator.remove();
-            }
-        }
-        // only inline comments left
-//        for (String line : linesToArrayList) {
-//            line = line.replaceAll("//.*","");
+//    private void removeCommentsAndWhitespace() {
+//        // remove all api block comments and multi-line comments
+//        sourceCode = sourceCode.replaceAll("/\\*\\*?\\s\\w+\\s+\\*?.+\\s+\\*?.+\\s+\\*?/","");
+//        // ->// comments
+//        String[] lines = sourceCode.split("\n");
+//        for (String line : lines) {
+//            line = line.replaceAll("[^\"^\\w]//\\s*\\w*[^\"]","");
 //        }
-        sourceCode = String.join("\n",linesToArrayList);
-    }
+//        // only inline comments and whitespace lines and lines starting with a comment left
+//        List<String> linesToArrayList = new ArrayList<>(Arrays.asList(lines));
+//        Iterator<String> iterator = linesToArrayList.iterator();
+//        while (iterator.hasNext()) {
+//            String lineOfCode = iterator.next();
+//            if (lineOfCode.startsWith("//") || lineOfCode.isBlank()) {
+//                iterator.remove();
+//            }
+//        }
+//        // only inline comments left
+////        for (String line : linesToArrayList) {
+////            line = line.replaceAll("//.*","");
+////        }
+//        sourceCode = String.join("\n",linesToArrayList);
+//    }
 }
