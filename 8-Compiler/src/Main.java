@@ -5,6 +5,11 @@ public class Main {
         System.out.println(tokenizer.hasMoreTokens());
         System.out.println(tokenizer.getCurrentToken());
         System.out.println(tokenizer.getSourceCode());
+        System.out.println();
+        System.out.println();
+        System.out.println("Sanitized string:");
+        tokenizer.advance();
+        System.out.println(tokenizer.getSourceCode());
 
     }
 }
