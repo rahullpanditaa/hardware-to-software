@@ -9,6 +9,7 @@ public class Main {
 
     }
 
+    // DEBUG THIS!!
     private static void start(Tokenizer tokenizer, String jackFile) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(jackFile))) {
             writer.write("<tokens>");

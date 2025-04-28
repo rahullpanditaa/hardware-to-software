@@ -4,6 +4,7 @@
 
 /** Expressionless version of projects/10/Square/Main.jack. */
 
+
 class Main {
     static boolean test;    // Added for testing -- there is no static keyword
                             // in the Square files.

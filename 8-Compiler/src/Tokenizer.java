@@ -84,6 +84,7 @@ public class Tokenizer {
     }
 
     // initially, there is no current token
+    // PROBLEM IN THIS METHOD
     public void advance() {
         removeCommentsAndWhitespace(); // will remove all comments
         // Now, only valid tokens and whitespace left
