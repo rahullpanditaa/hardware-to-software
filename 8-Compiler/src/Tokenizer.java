@@ -123,7 +123,7 @@ public class Tokenizer {
     }
 
     public String symbol() {
-        if (currentToken.equals("<")) {
+        if (currentToken.charAt(0) == '<') {
             return "&lt";
         } else if (currentToken.equals(">")) {
             return "&gt";
@@ -133,6 +133,31 @@ public class Tokenizer {
             return "&amp";
         } else {
             return currentToken;
+        }
+    }
+
+    public String identifier() {
+        if (tokenType().equals(IDENTIFIER)) {
+            return currentToken;
+        } else {
+            throw new RuntimeException("Current token is not an identifier");
+        }
+    }
+
+    public int intVal() {
+        if (tokenType().equals(INT_CONST)) {
+            return Integer.parseInt(currentToken);
+        }
+        else {
+            throw new RuntimeException("Current token is not an int");
+        }
+    }
+
+    public String stringVal() {
+        if (tokenType().equals(STRING_CONST)) {
+            return currentToken;
+        } else {
+            throw new RuntimeException("Current token is not a String Constant");
         }
     }
 
