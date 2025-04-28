@@ -98,7 +98,7 @@ public class Tokenizer {
         }
     }
 
-    private String tokenType() {
+    public String tokenType() {
         if (keywords.contains(currentToken)) {
             return KEYWORD;
         }
@@ -113,6 +113,27 @@ public class Tokenizer {
         }
         return IDENTIFIER;
 
+    }
+
+    public String keyword() {
+        return currentToken.toUpperCase();
+//        if (tokenType().equals(KEYWORD)) {
+//            return currentToken.toUpperCase();
+//        }
+    }
+
+    public String symbol() {
+        if (currentToken.equals("<")) {
+            return "&lt";
+        } else if (currentToken.equals(">")) {
+            return "&gt";
+        } else if (currentToken.equals("\"")) {
+            return "&quot";
+        } else if (currentToken.equals("&")) {
+            return "&amp";
+        } else {
+            return currentToken;
+        }
     }
 
     private void removeCommentsAndWhitespace() {
