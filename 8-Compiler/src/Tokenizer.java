@@ -21,6 +21,49 @@ public class Tokenizer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        keywords = new ArrayList<>();
+        keywords.add("class");
+        keywords.add("constructor");
+        keywords.add("function");
+        keywords.add("method");
+        keywords.add("field");
+        keywords.add("static");
+        keywords.add("var");
+        keywords.add("int");
+        keywords.add("char");
+        keywords.add("boolean");
+        keywords.add("void");
+        keywords.add("true");
+        keywords.add("false");
+        keywords.add("null");
+        keywords.add("this");
+        keywords.add("let");
+        keywords.add("do");
+        keywords.add("if");
+        keywords.add("else");
+        keywords.add("while");
+        keywords.add("return");
+
+        symbols = new ArrayList<>();
+        symbols.add("{");
+        symbols.add("}");
+        symbols.add("(");
+        symbols.add(")");
+        symbols.add("[");
+        symbols.add("]");
+        symbols.add(".");
+        symbols.add(",");
+        symbols.add(";");
+        symbols.add("+");
+        symbols.add("-");
+        symbols.add("*");
+        symbols.add("/");
+        symbols.add("&");
+        symbols.add("|");
+        symbols.add("<");
+        symbols.add(">");
+        symbols.add("=");
+        symbols.add("~");
     }
 
     public String getSourceCode() {
@@ -37,7 +80,8 @@ public class Tokenizer {
 
     // initially, there is no current token
     public void advance() {
-        removeCommentsAndWhitespace();
+        removeCommentsAndWhitespace(); // will remove all comments
+        // Now, only valid tokens and whitespace left
     }
 
     private void removeCommentsAndWhitespace() {
