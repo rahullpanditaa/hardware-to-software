@@ -27,6 +27,10 @@ public class Tokenizer {
         return sourceCode;
     }
 
+    public String getCurrentToken() {
+        return currentToken;
+    }
+
     public boolean hasMoreTokens() {
         return !sourceCode.isEmpty();
     }
