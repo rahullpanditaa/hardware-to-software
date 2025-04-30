@@ -36,9 +36,15 @@ public class Tokenizer {
     }
 
     private void removeCommentsAndWhitespace() {
-        Pattern commentsPattern = Pattern.compile("//?\\*\\*? [\\S\\s]+ \\*/");
-        Matcher commentsMatcher = commentsPattern.matcher(sourceCode);
-        setSourceCode(commentsMatcher.replaceAll(""));
+        Pattern blockCommentsPattern = Pattern.compile("//?\\*\\*? [\\S\\s]+ \\*/");
+        Matcher blockCommentsMatcher = blockCommentsPattern.matcher(sourceCode);
+        sourceCode = sourceCode.replaceAll("(// .*|//?\\*\\*? [\\S\\s]+ \\*/)","").strip();
+//        setSourceCode(blockCommentsMatcher.replaceAll(""));
+//        Pattern inlineCommentsPattern = Pattern.compile("// .*$");
+//        Matcher inlineCommentsMatcher = inlineCommentsPattern.matcher(sourceCode);
+//        this.sourceCode = blockCommentsMatcher.replaceAll("");
+//        this.sourceCode = inlineCommentsMatcher.replaceAll("");
+//        setSourceCode(inlineCommentsMatcher.replaceAll(""));
     }
 
 
