@@ -11,6 +11,8 @@ public class Main {
         if (matcher.find()) {
             String simplified = matcher.replaceFirst("$1/$2");  // extracting multiple groups -> $groupNumber
             System.out.println(simplified);
+            int result = Integer.valueOf(matcher.group(1)) / Integer.valueOf(matcher.group(2));
+            System.out.println(result);
         }
 
 //        String cardNumber = "9876-5432-1234";
