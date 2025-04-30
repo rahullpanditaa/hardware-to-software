@@ -8,6 +8,10 @@ import java.util.regex.Pattern;
 
 public class Tokenizer {
     private String sourceCode;
+    private static final String keywordsRegex = "(class|constructor|function|method|field" +
+                                                "|static|var|int|char|boolean|void|true|false" +
+                                                "|null|this|let|do|if|else|while|return)";
+    private static final String symbolsRegex = "(\\{|\\}|\\(|\\)|\\[|\\]|\\.|,|;|\\+|-|\\*|/|&|\\||<|>|=|~)";
 
     public Tokenizer(String jackFile) {
         try {
@@ -36,15 +40,8 @@ public class Tokenizer {
     }
 
     private void removeCommentsAndWhitespace() {
-        Pattern blockCommentsPattern = Pattern.compile("//?\\*\\*? [\\S\\s]+ \\*/");
-        Matcher blockCommentsMatcher = blockCommentsPattern.matcher(sourceCode);
         sourceCode = sourceCode.replaceAll("(// .*|//?\\*\\*? [\\S\\s]+ \\*/)","").strip();
-//        setSourceCode(blockCommentsMatcher.replaceAll(""));
-//        Pattern inlineCommentsPattern = Pattern.compile("// .*$");
-//        Matcher inlineCommentsMatcher = inlineCommentsPattern.matcher(sourceCode);
-//        this.sourceCode = blockCommentsMatcher.replaceAll("");
-//        this.sourceCode = inlineCommentsMatcher.replaceAll("");
-//        setSourceCode(inlineCommentsMatcher.replaceAll(""));
+
     }
 
 
