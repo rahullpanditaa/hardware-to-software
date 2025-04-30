@@ -5,7 +5,10 @@ public class Main {
     public static void main(String[] args) {
 
         Tokenizer tokenizer = new Tokenizer("Main.jack");
+//        System.out.println(tokenizer.getSourceCode());
+        tokenizer.advance();
         System.out.println(tokenizer.getSourceCode());
+
 
 //        Pattern pattern = Pattern.compile("^(\\d+) divided by (\\d+)$");
 //        Matcher matcher = pattern.matcher("100 divided by 25");
