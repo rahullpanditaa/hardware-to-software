@@ -43,11 +43,25 @@ public class Tokenizer {
     public void advance() {
         removeCommentsAndWhitespace();
         tokenizeKeywords();
+//        tokenizeSymbols();tokenizeIntegerConstants();
+//        tokenizeStringConstants();
     }
 
     private void tokenizeKeywords() {
         sourceCode = getSourceCode().replaceAll(keywordsRegex,"<keyword>$0</keyword>");
     }
+
+    private void tokenizeSymbols() {
+        sourceCode = sourceCode.replaceAll(symbolsRegex,"<symbol>$0</symbol>");
+    }
+    private void tokenizeIntegerConstants() {
+        sourceCode = sourceCode.replaceAll(integerConstantRegex, "<integerConstant>$0</integerConstant>");
+    }
+    private void tokenizeStringConstants() {
+        sourceCode = sourceCode.replaceAll(stringConstantRegex, "<stringConstant>$0</stringConstant>");
+    }
+
+
 
     private void removeCommentsAndWhitespace() {
         sourceCode = sourceCode.replaceAll("(// .*|//?\\*\\*? [\\S\\s]+ \\*/)","").strip();
