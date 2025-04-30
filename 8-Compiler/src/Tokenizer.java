@@ -8,10 +8,12 @@ import java.util.regex.Pattern;
 
 public class Tokenizer {
     private String sourceCode;
-    private static final String keywordsRegex = "(class|constructor|function|method|field" +
-                                                "|static|var|int|char|boolean|void|true|false" +
-                                                "|null|this|let|do|if|else|while|return)";
-    private static final String symbolsRegex = "(\\{|\\}|\\(|\\)|\\[|\\]|\\.|,|;|\\+|-|\\*|/|&|\\||<|>|=|~)";
+    private static final String keywordsRegex = "class|constructor|function|method|field|static|var|int|char|boolean|void|true|false|null|this|let|do|if|else|while|return";
+    private static final String symbolsRegex = "\\{|\\}|\\(|\\)|\\[|\\]|\\.|,|;|\\+|-|\\*|/|&|\\||<|>|=|~";
+    private static final String integerConstantRegex = "\\b[0-32767]+\\b";
+    private static final String stringConstantRegex = "\\\"[^\\\"^\\n].+\\\"";
+    private String currentToken;
+
 
     public Tokenizer(String jackFile) {
         try {
@@ -19,6 +21,10 @@ public class Tokenizer {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public String getCurrentToken() {
+        return currentToken;
     }
 
     public String getSourceCode() {
@@ -36,7 +42,11 @@ public class Tokenizer {
     // Gets the next token from the input, makes it the current token
     public void advance() {
         removeCommentsAndWhitespace();
+        tokenizeKeywords();
+    }
 
+    private void tokenizeKeywords() {
+        sourceCode = getSourceCode().replaceAll(keywordsRegex,"<keyword>$0</keyword>");
     }
 
     private void removeCommentsAndWhitespace() {
